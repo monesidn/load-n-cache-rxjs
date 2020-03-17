@@ -1,0 +1,38 @@
+{
+  "name": "load-n-cache-rxjs",
+  "version": "1.0.0",
+  "description": "Make it easier to use load-n-cache in a rxjs environment.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/monesidn/load-n-cache-rxjs"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand",
+    "test": "jest",
+    "build": "tsc",
+    "prestart": "npm run build",
+    "start": "node dist/index.js",
+    "clean": "rimraf dist && npm run test",
+    "prepublishOnly": "npm run build"
+  },
+  "author": "Daniele Monesi",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^25.1.0",
+    "@typescript-eslint/eslint-plugin": "^2.23.0",
+    "@typescript-eslint/parser": "^2.23.0",
+    "eslint": "^6.8.0",
+    "eslint-config-google": "^0.14.0",
+    "jest": "^25.1.0",
+    "jest-localstorage-mock": "^2.4.0",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^25.1.0",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "load-n-cache": "^1.0.0",
+    "rxjs": "^6.0.0"
+  }
+}
