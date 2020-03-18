@@ -57,8 +57,8 @@ export class LoadNCacheObservable<T> extends Observable<T> {
         this.loadNCache = new LoadNCache({
             loader: () => source.toPromise(),
             autoFlush: this.cfg.flushOn ? new RxJSAutoFlush(this.cfg.flushOn) : undefined,
-            persistance: this.cfg.persistence,
-            persistanceKey: this.cfg.persistenceKey
+            persistence: this.cfg.persistence,
+            persistenceKey: this.cfg.persistenceKey
         });
     }
 }

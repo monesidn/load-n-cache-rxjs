@@ -66,8 +66,8 @@ public randStr$ = new Observable<string>((sub) => {
             sub.complete();
         })
         .pipe(loadNCache({ 
-            persistance: 'localStorage',
-            persistanceKey: 'my-ls-key'
+            persistence: 'localStorage',
+            persistenceKey: 'my-ls-key'
         }));
 ```
 You can supply a persistence manager or use one of the supported out of the box. See below for more.

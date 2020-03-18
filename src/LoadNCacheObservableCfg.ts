@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { PersistanceManager, PromiseWithMetadata } from 'load-n-cache';
+import { PersistenceManager, PromiseWithMetadata } from 'load-n-cache';
 
 /**
  * The configuration for a LoadNCacheObservable. This class provide the same feature
@@ -19,7 +19,7 @@ export class LoadNCacheObservableCfg<T> {
      * is selected and a value is available the srcObservable may not be
      * subscribed at all.
      */
-    persistence?: string | PersistanceManager<T>;
+    persistence?: string | PersistenceManager<T>;
 
     /**
      * See LoadNCache documentation for details.
