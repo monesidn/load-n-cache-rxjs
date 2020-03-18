@@ -29,7 +29,7 @@ export class LoadNCacheObservable<T> extends Observable<T> {
     }
 
     /**
-     * Costruct the new instance.
+     * Construct the new instance.
      * @param {Observable} source This is the source observable that will provide values to cache.
      * @param {LoadNCacheObservableCfg} cfg optional additional configuration. See class for details.
      */
@@ -57,8 +57,8 @@ export class LoadNCacheObservable<T> extends Observable<T> {
         this.loadNCache = new LoadNCache({
             loader: () => source.toPromise(),
             autoFlush: this.cfg.flushOn ? new RxJSAutoFlush(this.cfg.flushOn) : undefined,
-            persistance: this.cfg.persistance,
-            persistanceKey: this.cfg.persistanceKey
+            persistance: this.cfg.persistence,
+            persistanceKey: this.cfg.persistenceKey
         });
     }
 }

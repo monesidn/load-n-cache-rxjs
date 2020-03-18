@@ -81,7 +81,7 @@ export class RxJSAutoFlush<T> implements AutoflushManager<T> {
             .subscribe(
                 () => flushCb(),
                 (err) => console.error('Received an observable error from the flush Observable.' +
-                                        'Flushing won\'t happend.', err)
+                                        'Flushing won\'t trigger anymore.', err)
             );
     }
 
