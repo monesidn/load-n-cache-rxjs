@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs';
-import { PersistenceManager, PromiseWithMetadata } from 'load-n-cache';
+import { Observable } from "rxjs";
+import { PersistenceManager, PromiseWithMetadata } from "@monesidn/load-n-cache";
 
 /**
  * The configuration for a LoadNCacheObservable. This class provide the same feature

@@ -1,8 +1,7 @@
-import { Observable, Subscriber } from 'rxjs';
-import { LoadNCache } from 'load-n-cache';
-import { LoadNCacheObservableCfg } from './LoadNCacheObservableCfg';
-import { RxJSAutoFlush } from './RxJSAutoFlush';
-
+import { Observable, Subscriber } from "rxjs";
+import { LoadNCache } from "@monesidn/load-n-cache";
+import { LoadNCacheObservableCfg } from "./LoadNCacheObservableCfg";
+import { RxJSAutoFlush } from "./RxJSAutoFlush";
 
 /**
  * See README.md for class documentation.
@@ -42,7 +41,7 @@ export class LoadNCacheObservable<T> extends Observable<T> {
                 if (this.closeAfterEmit) {
                     subscriber.complete();
                 } else {
-                    this.loadNCache.on('after-flush', () => {
+                    this.loadNCache.on("after-flush", () => {
                         this.loadNCache.get().then((v) => subscriber.next(v));
                     });
                 }

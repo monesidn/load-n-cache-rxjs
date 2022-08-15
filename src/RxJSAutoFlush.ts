@@ -1,6 +1,6 @@
-import { Observable, of, Subscription, Subject } from 'rxjs';
-import { AutoflushManager, PromiseWithMetadata } from 'load-n-cache';
-import { map, timeoutWith, first, catchError } from 'rxjs/operators';
+import { Observable, of, Subscription, Subject } from "rxjs";
+import { AutoflushManager, PromiseWithMetadata } from "@monesidn/load-n-cache";
+import { map, timeoutWith, first, catchError } from "rxjs/operators";
 
 /**
  * Autoflush adapter. This class provide a simple implementation of AutoflushManager
@@ -17,8 +17,7 @@ export class RxJSAutoFlush<T> implements AutoflushManager<T> {
      * observable for each cached value (you can also use always the same for all!).
      * @param {Function} flushOn A function mapping a value to a flush observable.
      */
-    constructor(private flushOn: (value: PromiseWithMetadata<T>) => Observable<any>) {
-    }
+    constructor(private flushOn: (value: PromiseWithMetadata<T>) => Observable<any>) {}
 
     /**
      * Try to invoke the provided flush function handling errors. The handler
@@ -30,7 +29,7 @@ export class RxJSAutoFlush<T> implements AutoflushManager<T> {
         try {
             return this.flushOn(value);
         } catch (err) {
-            console.error('Unable to invoke flushFn.', err);
+            console.error("Unable to invoke flushFn.", err);
             return new Subject();
         }
     }
@@ -61,8 +60,11 @@ export class RxJSAutoFlush<T> implements AutoflushManager<T> {
                 timeoutWith(10, of(false)),
                 first(),
                 catchError((err) => {
-                    console.error('Received an observable error while ' +
-                                        'checking expiration. Will assume value didn\'t expired.', err);
+                    console.error(
+                        "Received an observable error while " +
+                            "checking expiration. Will assume value didn't expired.",
+                        err
+                    );
                     return of(false);
                 })
             )
@@ -80,8 +82,11 @@ export class RxJSAutoFlush<T> implements AutoflushManager<T> {
             .pipe(first())
             .subscribe(
                 () => flushCb(),
-                (err) => console.error('Received an observable error from the flush Observable.' +
-                                        'Flushing won\'t trigger anymore.', err)
+                (err) =>
+                    console.error(
+                        "Received an observable error from the flush Observable." + "Flushing won't trigger anymore.",
+                        err
+                    )
             );
     }
 
