@@ -773,10 +773,12 @@ __metadata:
     jest: ^28.1.3
     jest-localstorage-mock: ^2.4.22
     rimraf: ^3.0.2
-    rxjs: ^6.0.0
+    rxjs: ">=6.0.0"
     ts-jest: ^28.0.7
     typedoc: ^0.23.10
     typescript: ^4.7.4
+  peerDependencies:
+    rxjs: ">=6.0.0"
   languageName: unknown
   linkType: soft
 
@@ -3890,12 +3892,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:^6.0.0":
-  version: 6.6.7
-  resolution: "rxjs@npm:6.6.7"
+"rxjs@npm:>=6.0.0":
+  version: 7.5.6
+  resolution: "rxjs@npm:7.5.6"
   dependencies:
-    tslib: ^1.9.0
-  checksum: bc334edef1bb8bbf56590b0b25734ba0deaf8825b703256a93714308ea36dff8a11d25533671adf8e104e5e8f256aa6fdfe39b2e248cdbd7a5f90c260acbbd1b
+    tslib: ^2.1.0
+  checksum: fc05f01364a74dac57490fb3e07ea63b422af04017fae1db641a009073f902ef69f285c5daac31359620dc8d9aee7d81e42b370ca2a8573d1feae0b04329383b
   languageName: node
   linkType: hard
 
@@ -4267,10 +4269,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^1.8.1, tslib@npm:^1.9.0":
+"tslib@npm:^1.8.1":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.1.0":
+  version: 2.4.0
+  resolution: "tslib@npm:2.4.0"
+  checksum: 8c4aa6a3c5a754bf76aefc38026134180c053b7bd2f81338cb5e5ebf96fefa0f417bff221592bf801077f5bf990562f6264fecbc42cd3309b33872cb6fc3b113
   languageName: node
   linkType: hard
 
