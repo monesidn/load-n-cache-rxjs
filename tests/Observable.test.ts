@@ -1,9 +1,10 @@
-import { Observable, Subscriber, throwError, Subject } from 'rxjs';
-import { loadNCache } from '../src';
+import { Observable, Subscriber, throwError, Subject } from "rxjs";
+import { loadNCache } from "../src";
 
-test('Observable: the source observable is subscribed only once.', async () => {
+test("Observable: the source observable is subscribed only once.", async () => {
     const mockGenerator = jest.fn((sub: Subscriber<string>) => {
-        sub.next('Hello World'); sub.complete();
+        sub.next("Hello World");
+        sub.complete();
     });
     const mockObs = new Observable(mockGenerator);
     const onValue = jest.fn();
@@ -18,9 +19,10 @@ test('Observable: the source observable is subscribed only once.', async () => {
     expect(onValue.mock.calls.length).toBe(2);
 });
 
-test('Observable: observable completes when flush is not available.', async () => {
+test("Observable: observable completes when flush is not available.", async () => {
     const mockGenerator = jest.fn((sub: Subscriber<string>) => {
-        sub.next('Hello World'); sub.complete();
+        sub.next("Hello World");
+        sub.complete();
     });
     const mockObs = new Observable(mockGenerator);
     const onFinish = jest.fn();
@@ -34,10 +36,11 @@ test('Observable: observable completes when flush is not available.', async () =
     expect(onFinish.mock.calls.length).toBe(1);
 });
 
-test('Observable: observable doesn\'t complete when flush is available.', async () => {
+test("Observable: observable doesn't complete when flush is available.", async () => {
     const never = new Subject();
     const mockGenerator = jest.fn((sub: Subscriber<string>) => {
-        sub.next('Hello World'); sub.complete();
+        sub.next("Hello World");
+        sub.complete();
     });
     const mockObs = new Observable(mockGenerator);
     const onFinish = jest.fn();
@@ -55,18 +58,23 @@ test('Observable: observable doesn\'t complete when flush is available.', async 
     expect(onFinish.mock.calls.length).toBe(0);
 });
 
-test('Observable: logs on flushFn error.', async () => {
-    const error = throwError('I\'m a test');
+test("Observable: logs on flushFn error.", async () => {
+    const error = throwError("I'm a test");
     const mockGenerator = jest.fn((sub: Subscriber<string>) => {
-        sub.next('Hello World'); sub.complete();
+        sub.next("Hello World");
+        sub.complete();
     });
     const mockObs = new Observable(mockGenerator);
     const mockError = jest.fn();
     console.error = mockError;
 
-    const piped = mockObs.pipe(loadNCache({ flushOn: () => {
-        throw error;
-    } }));
+    const piped = mockObs.pipe(
+        loadNCache({
+            flushOn: () => {
+                throw error;
+            }
+        })
+    );
     await new Promise((resolve) => {
         piped.subscribe(() => setTimeout(resolve, 100));
     });
@@ -75,10 +83,11 @@ test('Observable: logs on flushFn error.', async () => {
     expect(mockError.mock.calls.length).toBe(1);
 });
 
-test('Observable: logs on autoflush error.', async () => {
-    const error = throwError('I\'m a test');
+test("Observable: logs on autoflush error.", async () => {
+    const error = throwError("I'm a test");
     const mockGenerator = jest.fn((sub: Subscriber<string>) => {
-        sub.next('Hello World'); sub.complete();
+        sub.next("Hello World");
+        sub.complete();
     });
     const mockObs = new Observable(mockGenerator);
     const mockError = jest.fn();
@@ -93,14 +102,14 @@ test('Observable: logs on autoflush error.', async () => {
     expect(mockError.mock.calls.length).toBe(1);
 });
 
-test('Observable: explicit flush works as expected.', async () => {
+test("Observable: explicit flush works as expected.", async () => {
     const mockGenerator = jest.fn((sub: Subscriber<string>) => {
-        sub.next('Hello World'); sub.complete();
+        sub.next("Hello World");
+        sub.complete();
     });
     const mockObs = new Observable(mockGenerator);
     const flusher = new Subject<boolean>();
     const onValue = jest.fn();
-
 
     const piped = mockObs.pipe(loadNCache({ flushOn: () => flusher }));
 
@@ -114,7 +123,7 @@ test('Observable: explicit flush works as expected.', async () => {
     expect(mockGenerator.mock.calls.length).toBe(1);
     expect(onValue.mock.calls.length).toBe(2);
 
-    flusher.next();
+    flusher.next(true);
     await new Promise((resolve) => setTimeout(resolve, 100));
     expect(mockGenerator.mock.calls.length).toBe(2);
     expect(onValue.mock.calls.length).toBe(4);

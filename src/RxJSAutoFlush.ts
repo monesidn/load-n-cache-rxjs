@@ -1,6 +1,6 @@
-import { Observable, of, Subscription, Subject } from "rxjs";
+import { Observable, of, Subscription, Subject, lastValueFrom } from "rxjs";
 import { AutoflushManager, PromiseWithMetadata } from "@monesidn/load-n-cache";
-import { map, timeoutWith, first, catchError } from "rxjs/operators";
+import { map, timeoutWith, first, catchError, timeout } from "rxjs/operators";
 
 /**
  * Autoflush adapter. This class provide a simple implementation of AutoflushManager
@@ -54,10 +54,10 @@ export class RxJSAutoFlush<T> implements AutoflushManager<T> {
         // subscribe the returned observable and wait for 10 ms. If no
         // value was emitted then we can assume that the value will expire
         // in the future using the "fetched" method.
-        return this.invokeFlushFn(value)
-            .pipe(
+        return lastValueFrom(
+            this.invokeFlushFn(value).pipe(
                 map(() => true),
-                timeoutWith(10, of(false)),
+                timeout({ each: 10, with: () => of(false) }),
                 first(),
                 catchError((err) => {
                     console.error(
@@ -68,7 +68,7 @@ export class RxJSAutoFlush<T> implements AutoflushManager<T> {
                     return of(false);
                 })
             )
-            .toPromise();
+        );
     }
 
     /**
@@ -80,14 +80,14 @@ export class RxJSAutoFlush<T> implements AutoflushManager<T> {
         this.cleanUp();
         this.subscription = this.invokeFlushFn(value)
             .pipe(first())
-            .subscribe(
-                () => flushCb(),
-                (err) =>
+            .subscribe({
+                next: () => flushCb(),
+                error: (err) =>
                     console.error(
-                        "Received an observable error from the flush Observable." + "Flushing won't trigger anymore.",
+                        "Received an observable error from the flush Observable. Flushing won't trigger anymore.",
                         err
                     )
-            );
+            });
     }
 
     /**

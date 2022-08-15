@@ -1,4 +1,4 @@
-import { Observable, Subscriber } from "rxjs";
+import { lastValueFrom, Observable, Subscriber } from "rxjs";
 import { LoadNCache } from "@monesidn/load-n-cache";
 import { LoadNCacheObservableCfg } from "./LoadNCacheObservableCfg";
 import { RxJSAutoFlush } from "./RxJSAutoFlush";
@@ -54,7 +54,7 @@ export class LoadNCacheObservable<T> extends Observable<T> {
          */
         this.closeAfterEmit = !this.cfg.flushOn;
         this.loadNCache = new LoadNCache({
-            loader: () => source.toPromise(),
+            loader: () => lastValueFrom(source),
             autoFlush: this.cfg.flushOn ? new RxJSAutoFlush(this.cfg.flushOn) : undefined,
             persistence: this.cfg.persistence,
             persistenceKey: this.cfg.persistenceKey
