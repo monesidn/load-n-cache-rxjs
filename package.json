@@ -1,6 +1,6 @@
 {
   "name": "@monesidn/load-n-cache-rxjs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Make it easier to use load-n-cache in a rxjs environment.",
   "repository": {
     "type": "git",
